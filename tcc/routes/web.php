@@ -23,6 +23,9 @@ Route::get('/', function () {
 Route::resource('events', EventController::class);
 Route::get('events/edit/{id}', [EventController::class, 'edit'])->name('events.edit');
 Route::put('events/update/{id}', [EventController::class, 'update'])->name('events.update');
+Route::get('events/show/{id}', [EventController::class, 'show'])->name('events.show');
+Route::get('events/list/{id}', [EventController::class, 'index'])->name('events.list');
+Route::get('events/page/{id}', [EventController::class, 'page'])->name('events.page');
 
 Route::resource('carts', CartController::class);
 

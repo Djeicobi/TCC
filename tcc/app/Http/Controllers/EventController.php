@@ -67,6 +67,11 @@ class EventController extends Controller
         return view('events.show');
     }
 
+    public function page(Event $event)
+    {
+        return view('events.page');
+    }
+
     /**
      * Show the form for editing the specified resource.
      */
