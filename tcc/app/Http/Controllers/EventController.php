@@ -83,6 +83,20 @@ class EventController extends Controller
         return view('events.edit', ['event' => $event]);
     }
 
+    public function add($id)
+    {
+        $event = Event::findOrFail($id);
+        return view('events.add', ['event' => $event]);
+    }
+    /**public function quantidade_fotos(Event $event)
+    {
+        $photo = DB::table('photos')->get();
+
+        foreach ($photos as $photo) {
+            echo $user->name;
+        }
+    }*/
+
     public function update(UpdateEventRequest $request)
     {
         $data = $request->all();

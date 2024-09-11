@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EventController;
@@ -19,14 +20,19 @@ use App\Http\Controllers\CartController;
 Route::get('/', function () {
     return view('welcome');
 });
-
+//Eventos
 Route::resource('events', EventController::class);
 Route::get('events/edit/{id}', [EventController::class, 'edit'])->name('events.edit');
 Route::put('events/update/{id}', [EventController::class, 'update'])->name('events.update');
 Route::get('events/show/{id}', [EventController::class, 'show'])->name('events.show');
 Route::get('events/list/{id}', [EventController::class, 'index'])->name('events.list');
 Route::get('events/page/{id}', [EventController::class, 'page'])->name('events.page');
+Route::get('events/add/{id}', [EventController::class, 'add'])->name('events.add');
 
+//Fotos
+Route::resource('photos', PhotoController::class);
+
+//Carrinho
 Route::resource('carts', CartController::class);
 
 Route::get('/dashboard', function () {

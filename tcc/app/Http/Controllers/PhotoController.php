@@ -29,7 +29,20 @@ class PhotoController extends Controller
      */
     public function store(StorePhotoRequest $request)
     {
-        //
+        // Image Upload
+        if($request->hasFile('image') && $request->file('image')->isValid()){
+
+            $requestImage = $request->image;
+
+            $extension = $requestImage->extension();
+
+            $imageName = md5($requestImage->getClientOriginalName() . strtotime("now")) . "." .$extension;
+
+            $event = Event::findOrFail($id);
+            //descobrir como criar uma pasta automaticamente para cada evento novo
+            $request->image->move(public_path('img/events{{$event -> id}}'), $imageName);
+
+            $photo->image = $imageName;
     }
 
     /**
