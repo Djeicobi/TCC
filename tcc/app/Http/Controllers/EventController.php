@@ -6,6 +6,7 @@ use App\Models\Event;
 use App\Http\Requests\StoreEventRequest;
 use App\Http\Requests\UpdateEventRequest;
 use App\Http\Requests\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Redirect;
 
 class EventController extends Controller
@@ -54,7 +55,11 @@ class EventController extends Controller
             $event->image = $imageName;
         }
 
+
         $event->save();
+
+        // Folder creation
+        Storage::makeDirectory("album_{$event -> id}");
 
         return Redirect::route('events.index')->with('msg','Evento criado com sucesso!');
     }
@@ -125,6 +130,7 @@ class EventController extends Controller
     public function destroy($id)
     {
         Event::findOrFail($id)->delete();
+        //Storage::deleteDirectory($directory);
 
         return Redirect::route('events.index')->with('msg','Evento deletado com sucesso!');
     }

@@ -5,11 +5,11 @@
 @section('content')
 
 <!-- form -->
-<form action="{{ route('photo.store') }}" method="POST" enctype="multipart/form-data">
+<form action="" method="POST" enctype="multipart/form-data">
     @csrf
     <div id="AddFoto" class="container text-center event-grid">
         <div class="row g-0">
-        <div class="col d-flex justify-content-center col-md-4">
+        <div class="d-flex justify-content-center ">
             <div class="card" style="width: 18rem;">
             <img src="/img/events/{{ $event->image }}" class="card-img-top" alt="...">
             <div class="card-body">

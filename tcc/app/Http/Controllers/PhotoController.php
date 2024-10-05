@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Photo;
 use App\Http\Requests\StorePhotoRequest;
 use App\Http\Requests\UpdatePhotoRequest;
+use Illuminate\Support\Facades\Storage;
 
 class PhotoController extends Controller
 {
@@ -36,20 +37,10 @@ class PhotoController extends Controller
         $photo->event_id= $request->name;
         $photo->photo_price = $request->photo_price;
         $photo->created_at;
+
+        $file = $request->file("fotos")
         // Image Upload
-        if($request->hasFile('image') && $request->file('image')->isValid()){
-
-            $requestImage = $request->image;
-
-            $extension = $requestImage->extension();
-
-            $imageName = md5($requestImage->getClientOriginalName() . strtotime("now")) . "." .$extension;
-
-            $event = Event::findOrFail($id);
-            //descobrir como criar uma pasta automaticamente para cada evento novo
-            $request->image->move(public_path('img/events{{$event -> id}}'), $imageName);
-
-            $photo->image = $imageName;
+        Storage::putFile("album_{$event -> id}", $file )
     }
 
     /**
@@ -83,4 +74,5 @@ class PhotoController extends Controller
     {
         //
     }
+   }
 }

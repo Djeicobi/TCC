@@ -20,7 +20,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ms-auto">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="{{ 'events/show' }}">Eventos</a>
+              <a class="nav-link active" aria-current="page" href="{{ 'events' }}">Eventos</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{{'carrinho'}}">Carrinho</a>
