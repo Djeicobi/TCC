@@ -29,6 +29,13 @@ class PhotoController extends Controller
      */
     public function store(StorePhotoRequest $request)
     {
+        $photo = new Event;
+
+        $photo->id;
+        //descobrir como puxa o event_id automaticamente
+        $photo->event_id= $request->name;
+        $photo->photo_price = $request->photo_price;
+        $photo->created_at;
         // Image Upload
         if($request->hasFile('image') && $request->file('image')->isValid()){
 
