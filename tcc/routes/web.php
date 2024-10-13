@@ -28,9 +28,14 @@ Route::get('events/show/{id}', [EventController::class, 'show'])->name('events.s
 Route::get('events/list/{id}', [EventController::class, 'index'])->name('events.list');
 Route::get('events/page/{id}', [EventController::class, 'page'])->name('events.page');
 Route::get('events/add/{id}', [EventController::class, 'add'])->name('events.add');
+Route::post('photo/events/{id}', [EventController::class, 'photo_store'])->name('events.photo');
+//Route::post('event/{id}/photo', function (int $id){
+
 
 //Fotos
 Route::resource('photos', PhotoController::class);
+
+
 
 //Carrinho
 Route::resource('carts', CartController::class);

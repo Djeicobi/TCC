@@ -18,8 +18,8 @@ return new class extends Migration
                   ->constrained()
                   ->onUpdate('cascade')
                   ->onDelete('cascade');
-                  $table->foreignId('photo_id')
-                  ->references('id')->on('photos')
+                  $table->foreignId('id_photo')
+                  ->references('id_photo')->on('photos')
                   ->constrained()
                   ->onUpdate('cascade')
                   ->onDelete('cascade');

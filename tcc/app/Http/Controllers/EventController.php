@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\Photo;
 use App\Http\Requests\StoreEventRequest;
+use App\Http\Requests\StorePhotoRequest;
 use App\Http\Requests\UpdateEventRequest;
 use App\Http\Requests\Request;
 use Illuminate\Support\Facades\Storage;
@@ -14,6 +16,7 @@ class EventController extends Controller
     /**
      * Display a listing of the resource.
      */
+
     public function index()
     {
         $events = Event::all();
@@ -78,6 +81,47 @@ class EventController extends Controller
         return view('events.page', ['event' => $event] );
     }
 
+    public function photo_store(StoreEventRequest $request, $id)
+    {
+        //implementar forEach??
+        $event = Event::find($id);
+        //$event_id = $id;
+
+        if (!$event) {
+            return Redirect::route('events.index')->with('error', 'Evento não encontrado!');
+        }
+
+        $photo = new Photo;
+
+        $photo->event_id = $event->id;
+        $photo->created_at = now();
+
+
+        // Image Upload
+        $file = $request->file("fotos");
+
+        // Verifica se o arquivo foi enviado
+    if ($file) {
+        // Garante que o diretório "album_{event_id}" existe
+        $directory = "album_{$event->id}";
+        if (!Storage::exists($directory)) {
+            Storage::makeDirectory($directory);
+        }
+
+        // Define um nome para o arquivo, por exemplo, o nome original da imagem
+        $filename = $file->getClientOriginalName();
+
+        // Salva o arquivo no diretório criado
+        Storage::putFileAs($directory, $file, $filename);
+    }
+
+    // Salva a foto no banco de dados
+    $photo->save();
+
+        return Redirect::route('events.index')->with('msg','Evento criado com sucesso!');
+
+
+    }
     /**
      * Show the form for editing the specified resource.
      */
@@ -93,14 +137,6 @@ class EventController extends Controller
         $event = Event::findOrFail($id);
         return view('events.add', ['event' => $event]);
     }
-    /**public function quantidade_fotos(Event $event)
-    {
-        $photo = DB::table('photos')->get();
-
-        foreach ($photos as $photo) {
-            echo $user->name;
-        }
-    }*/
 
     public function update(UpdateEventRequest $request)
     {
@@ -130,7 +166,7 @@ class EventController extends Controller
     public function destroy($id)
     {
         Event::findOrFail($id)->delete();
-        //Storage::deleteDirectory($directory);
+        Storage::deleteDirectory("album_{$id}");
 
         return Redirect::route('events.index')->with('msg','Evento deletado com sucesso!');
     }
