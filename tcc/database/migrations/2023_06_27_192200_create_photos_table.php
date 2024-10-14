@@ -19,6 +19,7 @@ return new class extends Migration
                   ->constrained()
                   ->onUpdate('cascade')
                   ->onDelete('cascade');
+            $table->string('foto');
             $table->timestamps();
             //$table->foreignIdFor(Event::class);
         });

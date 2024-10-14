@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use App\Models\Photo;
+use Illuminate\Support\Facades\File;
 use App\Http\Requests\StoreEventRequest;
 use App\Http\Requests\StorePhotoRequest;
 use App\Http\Requests\UpdateEventRequest;
@@ -96,35 +97,42 @@ class EventController extends Controller
         $photo->event_id = $event->id;
         $photo->created_at = now();
 
-
         // Image Upload
-        $file = $request->file("fotos");
+        if($request->hasFile('foto') && $request->file('foto')->isValid()){
 
-        // Verifica se o arquivo foi enviado
-    if ($file) {
-        // Garante que o diretório "album_{event_id}" existe
-        $directory = "album_{$event->id}";
-        if (!Storage::exists($directory)) {
-            Storage::makeDirectory($directory);
+            $requestFoto = $request->foto;
+
+            $extension = $requestFoto->extension();
+
+            $fotoName = md5($requestFoto->getClientOriginalName() . strtotime("now")) . "." .$extension;
+
+            Storage::putFileAs("album_{$event -> id}", $requestFoto, $fotoName);
+            //$request->foto->move("\storage\app\album_{$event->id}", $fotoName);
+
+            $photo->foto = $fotoName;
         }
 
-        // Define um nome para o arquivo, por exemplo, o nome original da imagem
-        $filename = $file->getClientOriginalName();
-
-        // Salva o arquivo no diretório criado
-        Storage::putFileAs($directory, $file, $filename);
-    }
-
-    // Salva a foto no banco de dados
     $photo->save();
 
         return Redirect::route('events.index')->with('msg','Evento criado com sucesso!');
 
 
     }
-    /**
-     * Show the form for editing the specified resource.
-     */
+    public function list_photos($id, $event){
+
+    $path = ("storage/app/album_" . $id);
+
+    if (File::exists($path)) {
+
+        $files = File::files($path);
+
+        return view('event.page', ['files' => $files, 'event_id' => $id]);
+    } else {
+
+        return redirect()->back()->with('error', 'Nenhuma foto encontrada para este evento.');
+    }
+}
+
     public function edit($id)
     {
         $event = Event::findOrFail($id);

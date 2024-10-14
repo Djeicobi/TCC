@@ -4,157 +4,24 @@
 
 @section('content')
 
-{{--@if(isset($events) && count($events) > 0)
-<div class="event_page">
-    <img src="\img\bg2.jpeg" class="card-img-top" alt="...">
-     <img class="object-scale-down w-20 h-20 rounded  bg-gray-50" src="/img/events/{{ $event->image }}" alt="Imagem do Evento">
-</div>--}}
+
+{{--@if(isset($photo) && count($photo) > 0) --}}
+
 <div class="container text-center event-grid">
     <div class="row g-0">
-      <div class="col d-flex justify-content-center col-md-4">
-        <div class="card" style="width: 18rem;">
-          <img src="\img\bg2.jpeg" class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Misiones 2022</h5>
-            <p class="card-text">12/10/2022</p>
-            <a href="#" class="btn btn-primary stretched-link">Ver Evento</a>
-          </div>
-        </div>
-      </div>
-      <div class="container text-center event-grid">
-        <div class="row g-0">
+            {{--@foreach ($photos as $photo)--}}
           <div class="col d-flex justify-content-center col-md-4">
             <div class="card" style="width: 18rem;">
-              <img src="\img\bg2.jpeg" class="card-img-top" alt="...">
+                <img src="{{ asset('storage/app/album_' . $event->id . '/' . $file->getFilename()) }}" class="card-img-top" alt="...">
               <div class="card-body">
-                <h5 class="card-title">Misiones 2022</h5>
-                <p class="card-text">12/10/2022</p>
-                <a href="#" class="btn btn-primary stretched-link">Ver Evento</a>
+                <a href="#" class="btn btn-primary stretched-link">Adicionar ao Carrinho</a>
               </div>
             </div>
           </div>
-          <div class="container text-center event-grid">
-            <div class="row g-0">
-              <div class="col d-flex justify-content-center col-md-4">
-                <div class="card" style="width: 18rem;">
-                  <img src="\img\bg2.jpeg" class="card-img-top" alt="...">
-                  <div class="card-body">
-                    <h5 class="card-title">Misiones 2022</h5>
-                    <p class="card-text">12/10/2022</p>
-                    <a href="#" class="btn btn-primary stretched-link">Ver Evento</a>
-                  </div>
-                </div>
-              </div>
-              <div class="container text-center event-grid">
-                <div class="row g-0">
-                  <div class="col d-flex justify-content-center col-md-4">
-                    <div class="card" style="width: 18rem;">
-                      <img src="\img\bg2.jpeg" class="card-img-top" alt="...">
-                      <div class="card-body">
-                        <h5 class="card-title">Misiones 2022</h5>
-                        <p class="card-text">12/10/2022</p>
-                        <a href="#" class="btn btn-primary stretched-link">Ver Evento</a>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="container text-center event-grid">
-                    <div class="row g-0">
-                      <div class="col d-flex justify-content-center col-md-4">
-                        <div class="card" style="width: 18rem;">
-                          <img src="\img\bg2.jpeg" class="card-img-top" alt="...">
-                          <div class="card-body">
-                            <h5 class="card-title">Misiones 2022</h5>
-                            <p class="card-text">12/10/2022</p>
-                            <a href="#" class="btn btn-primary stretched-link">Ver Evento</a>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="container text-center event-grid">
-                        <div class="row g-0">
-                          <div class="col d-flex justify-content-center col-md-4">
-                            <div class="card" style="width: 18rem;">
-                              <img src="\img\bg2.jpeg" class="card-img-top" alt="...">
-                              <div class="card-body">
-                                <h5 class="card-title">Misiones 2022</h5>
-                                <p class="card-text">12/10/2022</p>
-                                <a href="#" class="btn btn-primary stretched-link">Ver Evento</a>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="container text-center event-grid">
-                            <div class="row g-0">
-                              <div class="col d-flex justify-content-center col-md-4">
-                                <div class="card" style="width: 18rem;">
-                                  <img src="\img\bg2.jpeg" class="card-img-top" alt="...">
-                                  <div class="card-body">
-                                    <h5 class="card-title">Misiones 2022</h5>
-                                    <p class="card-text">12/10/2022</p>
-                                    <a href="#" class="btn btn-primary stretched-link">Ver Evento</a>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="container text-center event-grid">
-                                <div class="row g-0">
-                                  <div class="col d-flex justify-content-center col-md-4">
-                                    <div class="card" style="width: 18rem;">
-                                      <img src="\img\bg2.jpeg" class="card-img-top" alt="...">
-                                      <div class="card-body">
-                                        <h5 class="card-title">Misiones 2022</h5>
-                                        <p class="card-text">12/10/2022</p>
-                                        <a href="#" class="btn btn-primary stretched-link">Ver Evento</a>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div class="container text-center event-grid">
-                                    <div class="row g-0">
-                                      <div class="col d-flex justify-content-center col-md-4">
-                                        <div class="card" style="width: 18rem;">
-                                          <img src="\img\bg2.jpeg" class="card-img-top" alt="...">
-                                          <div class="card-body">
-                                            <h5 class="card-title">Misiones 2022</h5>
-                                            <p class="card-text">12/10/2022</p>
-                                            <a href="#" class="btn btn-primary stretched-link">Ver Evento</a>
-                                          </div>
-                                        </div>
-                                      </div>
-                                      <div class="container text-center event-grid">
-                                        <div class="row g-0">
-                                          <div class="col d-flex justify-content-center col-md-4">
-                                            <div class="card" style="width: 18rem;">
-                                              <img src="\img\bg2.jpeg" class="card-img-top" alt="...">
-                                              <div class="card-body">
-                                                <h5 class="card-title">Misiones 2022</h5>
-                                                <p class="card-text">12/10/2022</p>
-                                                <a href="#" class="btn btn-primary stretched-link">Ver Evento</a>
-                                              </div>
-                                            </div>
-                                          </div>
-                                          <div class="container text-center event-grid">
-                                            <div class="row g-0">
-                                              <div class="col d-flex justify-content-center col-md-4">
-                                                <div class="card" style="width: 18rem;">
-                                                  <img src="\img\bg2.jpeg" class="card-img-top" alt="...">
-                                                  <div class="card-body">
-                                                    <h5 class="card-title">Misiones 2022</h5>
-                                                    <p class="card-text">12/10/2022</p>
-                                                    <a href="#" class="btn btn-primary stretched-link">Ver Evento</a>
-                                                  </div>
-                                                </div>
-                                              </div>
-                                              <div class="container text-center event-grid">
-                                                <div class="row g-0">
-                                                  <div class="col d-flex justify-content-center col-md-4">
-                                                    <div class="card" style="width: 18rem;">
-                                                      <img src="\img\bg2.jpeg" class="card-img-top" alt="...">
-                                                      <div class="card-body">
-                                                        <h5 class="card-title">Misiones 2022</h5>
-                                                        <p class="card-text">12/10/2022</p>
-                                                        <a href="#" class="btn btn-primary stretched-link">Ver Evento</a>
-                                                      </div>
-                                                    </div>
-                                                  </div>
 
-{{--@endif--}}
+         {{-- @endforeach
+@endif--}}
+
 <nav aria-label="Page navigation example">
 <ul class="pagination justify-content-center">
   <li class="page-item">
