@@ -18,11 +18,13 @@ return new class extends Migration
                   ->constrained()
                   ->onUpdate('cascade')
                   ->onDelete('cascade');
-                  $table->foreignId('id_photo')
+            $table->foreignId('id_photo')
                   ->references('id_photo')->on('photos')
                   ->constrained()
                   ->onUpdate('cascade')
                   ->onDelete('cascade');
+            $table->integer('quantity')->default('1');
+            $table->float('price', 8, 2);
             $table->timestamps();
         });
     }

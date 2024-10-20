@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sale', function (Blueprint $table) {
+        Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users');
-            $table->foreignId('cart_id')->references('id')->on('carts');
+            //$table->foreignId('cart_id')->references('id')->on('carts');
+            $table->json('photo_ids');
             $table->float('total_price', 8, 2);
+            $table->string('status')->default('Pendente');
             $table->timestamps();
         });
     }

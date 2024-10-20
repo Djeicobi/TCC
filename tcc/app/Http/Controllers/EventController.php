@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use App\Models\Photo;
+use App\Http\Controllers\PhotoController;
 use Illuminate\Support\Facades\File;
 use App\Http\Requests\StoreEventRequest;
 use App\Http\Requests\StorePhotoRequest;
@@ -24,10 +25,13 @@ class EventController extends Controller
 
         return view('events.list', ['events' => $events]);
     }
+    public function all()
+    {
+        $events = Event::all();
 
-    /**
-     * Show the form for creating a new resource.
-     */
+        return view('events.all', ['events' => $events]);
+    }
+
     public function create()
     {
         return view('events.create');
@@ -63,7 +67,7 @@ class EventController extends Controller
         $event->save();
 
         // Folder creation
-        Storage::makeDirectory("album_{$event -> id}");
+        Storage::makeDirectory("public\album_{$event -> id}");
 
         return Redirect::route('events.index')->with('msg','Evento criado com sucesso!');
     }
@@ -71,56 +75,59 @@ class EventController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Event $event)
+    public function show($id)
     {
-        return view('events.show');
+        $event = Event::with('photos')->findOrFail($id);
+
+        return view('events.show', compact('event'));
     }
 
     public function page($id)
     {
         $event = Event::findOrFail($id);
-        return view('events.page', ['event' => $event] );
+        return view('events.page', ['event' => $event]);
     }
 
     public function photo_store(StoreEventRequest $request, $id)
-    {
-        //implementar forEach??
-        $event = Event::find($id);
-        //$event_id = $id;
+{
+    $event = Event::find($id);
 
-        if (!$event) {
-            return Redirect::route('events.index')->with('error', 'Evento não encontrado!');
-        }
-
-        $photo = new Photo;
-
-        $photo->event_id = $event->id;
-        $photo->created_at = now();
-
-        // Image Upload
-        if($request->hasFile('foto') && $request->file('foto')->isValid()){
-
-            $requestFoto = $request->foto;
-
-            $extension = $requestFoto->extension();
-
-            $fotoName = md5($requestFoto->getClientOriginalName() . strtotime("now")) . "." .$extension;
-
-            Storage::putFileAs("album_{$event -> id}", $requestFoto, $fotoName);
-            //$request->foto->move("\storage\app\album_{$event->id}", $fotoName);
-
-            $photo->foto = $fotoName;
-        }
-
-    $photo->save();
-
-        return Redirect::route('events.index')->with('msg','Evento criado com sucesso!');
-
-
+    if (!$event) {
+        return Redirect::route('events.index')->with('error', 'Evento não encontrado!');
     }
+
+
+    if ($request->hasFile('foto') && is_array($request->foto)) {
+        foreach ($request->file('foto') as $foto) {
+
+            if ($foto->isValid()) {
+                $photo = new Photo;
+
+                $photo->event_id = $event->id;
+                $photo->created_at = now();
+
+                // Upload de imagem
+                $extension = $foto->extension();
+                $fotoName = md5($foto->getClientOriginalName() . strtotime("now")) . "." . $extension;
+
+
+                Storage::putFileAs("public\album_{$event -> id}", $foto, $fotoName);
+
+
+                $photo->foto = $fotoName;
+
+
+                $photo->save();
+            }
+        }
+    }
+
+    return Redirect::route('events.index')->with('msg', 'Fotos carregadas com sucesso!');
+}
+
     public function list_photos($id, $event){
 
-    $path = ("storage/app/album_" . $id);
+    $path = ("storage/app/album_{$event -> id}");
 
     if (File::exists($path)) {
 
@@ -131,6 +138,12 @@ class EventController extends Controller
 
         return redirect()->back()->with('error', 'Nenhuma foto encontrada para este evento.');
     }
+}
+public function listarImagens()
+{
+    $events = Event::with('fotos')->get();
+
+    return view('events.listarImagens', compact('events'));
 }
 
     public function edit($id)

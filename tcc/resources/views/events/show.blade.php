@@ -1,92 +1,28 @@
-@extends('layouts.main')
+@extends('layouts.pages')
 
-@section('title', 'Eventos')
+@section('title', 'Página do Evento')
 
 @section('content')
 
-<!-- Cards -->
 
 <div class="container text-center event-grid">
-<div class="row g-0">
-  <div class="col d-flex justify-content-center col-md-4">
-    <div class="card" style="width: 18rem;">
-      <img src="\img\bg2.jpeg" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title">Misiones 2022</h5>
-        <p class="card-text">12/10/2022</p>
-        <a href="#" class="btn btn-primary stretched-link">Ver Evento</a>
-      </div>
-    </div>
-  </div>
-  <div class="col d-flex justify-content-center col-md-4">
-    <div class="card" style="width: 18rem;">
-      <img src="\img\bg6.jpeg" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title">Misiones 2022</h5>
-        <p class="card-text">12/10/2022</p>
-        <a href="#" class="btn btn-primary stretched-link">Ver Evento</a>
-      </div>
-    </div>
-  </div>
-  <div class="col d-flex justify-content-center col-md-4">
-    <div class="card" style="width: 18rem;">
-      <img src="\img\bg9.jpeg" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title">Misiones 2022</h5>
-        <p class="card-text">12/10/2022</p>
-        <a href="#" class="btn btn-primary stretched-link">Ver Evento</a>
-      </div>
-    </div>
-  </div>
-  <div class="col d-flex justify-content-center col-md-4">
-    <div class="card" style="width: 18rem;">
-      <img src="\img\bg3.jpeg" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title">Misiones 2022</h5>
-        <p class="card-text">12/10/2022</p>
-        <a href="#" class="btn btn-primary stretched-link">Ver Evento</a>
-      </div>
-    </div>
-  </div>
-  <div class="col d-flex justify-content-center col-md-4">
-    <div class="card" style="width: 18rem;">
-      <img src="\img\bg7.jpeg" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title">Misiones 2022</h5>
-        <p class="card-text">12/10/2022</p>
-        <a href="#" class="btn btn-primary stretched-link">Ver Evento</a>
-      </div>
-    </div>
-  </div>
-  <div class="col d-flex justify-content-center col-md-4">
-    <div class="card" style="width: 18rem;">
-      <img src="\img\bg4.jpeg" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title">Misiones 2022</h5>
-        <p class="card-text">12/10/2022</p>
-        <a href="#" class="btn btn-primary stretched-link">Ver Evento</a>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
+    <div class="row g-0">
+        @foreach($event->photos as $photo)
+          <div class="col d-flex justify-content-center col-md-4">
+            <div class="card" style="width: 18rem;">
+                <img src="{{ asset('storage/album_' . $event->id . '/' . $photo->foto) }}" class="card-img-top" alt="...">
+                <!-- Exibe o número da foto -->
+                <div class="card-body">
+                <p class="card-text">Foto {{ $loop->iteration }}</p>
+                <!-- Formulário para adicionar ao carrinho -->
+                <form action="{{ route('cart.add', ['photo' => $photo->id_photo, 'event' => $event->id]) }}" method="POST">
+                    @csrf
+                    <button type="submit" class="btn btn-primary stretched-link">Adicionar ao Carrinho</button>
+                </form>
+              </div>
+            </div>
+          </div>
+          @endforeach
 
-<nav aria-label="Page navigation example">
-<ul class="pagination justify-content-center">
-  <li class="page-item">
-    <a class="page-link" href="#" aria-label="Previous">
-      <span aria-hidden="true">&laquo;</span>
-    </a>
-  </li>
-  <li class="page-item"><a class="page-link" href="#">1</a></li>
-  <li class="page-item"><a class="page-link" href="#">2</a></li>
-  <li class="page-item"><a class="page-link" href="#">3</a></li>
-  <li class="page-item">
-    <a class="page-link" href="#" aria-label="Next">
-      <span aria-hidden="true">&raquo;</span>
-    </a>
-  </li>
-</ul>
-</nav>
 
 @endsection

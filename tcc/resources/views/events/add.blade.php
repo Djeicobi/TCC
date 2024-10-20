@@ -17,7 +17,7 @@
                 <h5 class="card-title">{{ $event->name }}</h5>
                 <h5 class="card-title">{{ $event->quantidade_fotos }}</h5>
                 <p class="card-text">{{ $event->created_at->format('d-m-Y') }}</p>
-                <input type="file" id="foto" name="foto" class="form-control-file">
+                <input type="file" multiple id="foto" name="foto[]" class="form-control-file">
                 <input type="submit" class="btn btn-primary" value="Enviar Imagens">
             </form>
         </div>

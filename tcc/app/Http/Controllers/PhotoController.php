@@ -35,43 +35,16 @@ class PhotoController extends Controller
     public function store(StorePhotoRequest $request)
     {
 
-         $current_url =  $_SERVER['HTTP_REFERER'];
-         dd($_SERVER['HTTP_REFERER']);
-
-         $partes = explode('/', $current_url);
-
-        $event_id = end($partes);
-
-        //$event = Event::find($request->input ("event_id"));  $_server['HTTP_REFFER']
-        //$event = Event::find($id);
-        dd($event_id);
-        $photo = new Photo;
-
-        $photo->id;
-
-        session_start();
-        //$event_id = $_SESSION['id_album'];
-        $photo->$event_id;
-        $photo->photo_price = $request->photo_price;
-        $photo->created_at;
-
-        dd($event_id,);
-
-        // Image Upload
-        $file = $request->file("fotos");
-        Storage::putFile("album_{$event_id -> id}", $file );
-
-        $photo->save();
-        return Redirect::route('events.index', ['event_id' => $event_id])->with('msg','Evento criado com sucesso!');
     }
-
 
     /**
      * Display the specified resource.
      */
     public function show(Photo $photo)
     {
-        //
+        $images = Storage::disk('public')->allFiles("album_{$photo -> event_id}");
+
+        return (['images' => $images]);
     }
 
     /**
